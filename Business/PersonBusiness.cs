@@ -25,5 +25,26 @@ namespace Business
             var result = people.Where(x => x.name.Contains(productName)).ToList();
             return result;
         }
+
+        public void Insert(Product product)
+        {
+            PersonData data = new PersonData();
+            data.Insert(product);
+            
+        }
+
+        public void Update(Product product)
+        {
+            PersonData data = new PersonData();
+            data.Update(product);
+        }
+
+        public void Delete(int productId)
+        {
+            PersonData data = new PersonData();
+            data.Delete(productId);
+        }
+
+
     }
 }

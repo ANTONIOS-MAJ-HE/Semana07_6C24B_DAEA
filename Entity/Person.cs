@@ -13,6 +13,8 @@ namespace Entity
         public decimal price { get; set; }
         public int stock { get; set; }
 
+        public Product() { }
+
         public Product(int id, string name, decimal price, int stock)
         {
             this.product_id = id;

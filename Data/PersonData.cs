@@ -11,7 +11,7 @@ namespace Data
 {
     public class PersonData
     {
-        private string connectionString = "Data Source= LAB1504-06\\SQLEXPRESS;Initial Catalog= FACTURADB;Integrated Security=True;";
+        private string connectionString = "Data Source= LAB1504-15\\SQLEXPRESS;Initial Catalog= FACTURADB;Integrated Security=True;";
         public List<Product> Get()
         {
             List<Product> people = new List<Product>();
@@ -47,18 +47,78 @@ namespace Data
 
             return people;
         }
-        public void Insert()
+
+
+        public void Insert(Product product)
         {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("InsertProductsProcedure", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
+                command.Parameters.AddWithValue("@product_id", product.product_id);
+                command.Parameters.AddWithValue("@name", product.name);
+                command.Parameters.AddWithValue("@price", product.price);
+                command.Parameters.AddWithValue("@stock", product.stock);
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    // Manejar la excepción según tus necesidades
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
         }
-        public void Update() 
+
+        public void Update(Product product)
         {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("UpdateProductsProcedure", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
+                command.Parameters.AddWithValue("@product_id", product.product_id);
+                command.Parameters.AddWithValue("@name", product.name);
+                command.Parameters.AddWithValue("@price", product.price);
+                command.Parameters.AddWithValue("@stock", product.stock);
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    // Manejar la excepción según tus necesidades
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
         }
 
-        public void Delete() 
-        { 
+        public void Delete(int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleteProductsProcedure", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
+                command.Parameters.AddWithValue("@product_id", productId);
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    // Manejar la excepción según tus necesidades
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
         }
     }
 }
